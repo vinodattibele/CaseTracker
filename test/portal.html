@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><title>Local test portal - not a real court record</title></head>
+  <body>
+    <h1>Local test portal</h1>
+    <label>CNR <input id="cino"></label>
+    <label>Test verification <input id="test-verification"></label>
+    <button id="search" type="button">Search</button>
+    <p id="error"></p>
+    <div id="history_cnr" hidden></div>
+    <script>
+      document.querySelector("#search").addEventListener("click", () => {
+        if (document.querySelector("#test-verification").value !== "human-test") {
+          document.querySelector("#error").textContent = "Test verification failed";
+          return;
+        }
+        const result = document.querySelector("#history_cnr");
+        result.hidden = false;
+        result.innerHTML = `
+          <h2>Case Details</h2>
+          <table>
+            <tr><th>Case Type</th><th>Filing Number</th><th>Registration Number</th></tr>
+            <tr><td>Original Suit</td><td>140/2025</td><td>123/2025</td></tr>
+            <tr><td>CNR Number</td><td id="result-cnr"></td></tr>
+          </table>
+          <h2>Case Status</h2>
+          <table>
+            <tr><td>Case Status</td><td>Pending</td></tr>
+            <tr><td>Next Hearing Date</td><td>31-12-2026</td></tr>
+            <tr><td>Court Number and Judge</td><td>1 - Civil Judge</td></tr>
+            <tr><td>District</td><td>Bengaluru Urban</td></tr>
+          </table>
+          <h2>Petitioner and Advocate</h2><p>1) Test Plaintiff<br>Advocate: Test Counsel</p>
+          <h2>Respondent and Advocate</h2><p>1) Test Defendant</p>
+          <h2>Acts</h2><table><tr><th>Act</th><th>Section</th></tr><tr><td>Civil Procedure Code</td><td>9</td></tr></table>
+          <h2>History of Case Hearing</h2><table><tr><th>Hearing Date</th><th>Business</th></tr><tr><td>10-10-2026</td><td>Evidence</td></tr></table>
+          <h2>Orders</h2><a href="https://services.ecourts.gov.in/test-order.pdf?app_token=secret">Test order</a>
+          <div hidden>Hidden information must not be imported</div>`;
+        document.querySelector("#result-cnr").textContent = document.querySelector("#cino").value;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Local Case Workspace</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/workspace.css">
+    <script src="/workspace.js" type="module"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">KC</span><span>Local case <strong>workspace</strong></span></a>
+      <a class="official-link" href="/">Back to case tracker</a>
+    </header>
+    <main class="page">
+      <section class="intro">
+        <div>
+          <p class="eyebrow">YOUR DOCUMENTS · LOCAL AI</p>
+          <h1 id="workspace-title">Case workspace</h1>
+          <p id="workspace-cnr" class="intro-copy"></p>
+        </div>
+        <button id="sync-case" class="button button-quiet" type="button">Sync tracker snapshot</button>
+      </section>
+      <section class="notice">
+        <span class="notice-icon">i</span>
+        <p><strong>Legal assistance, not an AI advocate.</strong> The assistant can summarize and draft from supplied documents, but cannot represent you, verify all legal claims, or guarantee outcomes. Review sources and drafts with a qualified advocate. Upload only documents you are entitled to use. No document is sent to cloud AI.</p>
+      </section>
+      <p id="workspace-error" class="message" role="alert"></p>
+      <section class="workspace-panel health-panel" aria-labelledby="health-title">
+        <p class="eyebrow">TIMELINE-BASED ASSESSMENT</p>
+        <h2 id="health-title">Case health</h2>
+        <p id="health-summary"></p>
+        <div id="health-metrics" class="health-metrics"></div>
+        <p id="health-freshness"></p>
+        <ul id="health-warnings"></ul>
+        <div class="health-columns">
+          <div>
+            <h3>Recorded stages and intervals</h3>
+            <div id="health-stages"></div>
+            <p id="health-gap"></p>
+          </div>
+          <div>
+            <h3>What could move the case forward?</h3>
+            <p>Questions to discuss with your advocate, not findings about who caused delay.</p>
+            <ul id="health-questions"></ul>
+            <h3>Documents for a meaningful review</h3>
+            <ul id="health-documents"></ul>
+          </div>
+        </div>
+        <p id="health-merits"></p>
+        <p id="health-limitations"></p>
+      </section>
+      <section class="workspace-panel" aria-labelledby="roadmap-title">
+        <p class="eyebrow">PRACTICAL NEXT STEPS</p>
+        <h2 id="roadmap-title">Move the case forward: preparation roadmap</h2>
+        <p id="roadmap-notice"></p>
+        <section aria-labelledby="journey-title">
+          <h3 id="journey-title">Estimated case completion - rough checklist estimate</h3>
+          <p id="journey-summary"></p>
+          <div id="completion-scene" class="completion-scene" hidden>
+            <div class="completion-track">
+              <div id="completion-lawyer" class="completion-lawyer" aria-hidden="true">
+                <svg viewBox="0 0 64 96" focusable="false">
+                  <g class="lawyer-stride">
+                    <g class="lawyer-leg lawyer-leg-back">
+                      <path d="M30 57 L23 73 L12 81" />
+                      <path class="lawyer-shoe" d="M12 81 L7 83 L16 86" />
+                    </g>
+                    <g class="lawyer-leg lawyer-leg-front">
+                      <path d="M34 57 L43 73 L36 86" />
+                      <path class="lawyer-shoe" d="M36 86 L47 87" />
+                    </g>
+                    <path fill="#1c2735" d="M26 27 L40 28 L44 61 L22 61 Z" />
+                    <path fill="#fff" d="M29 28 L36 28 L33 47 Z" />
+                    <path fill="#e5edf3" d="M30 30 L28 40 L32 38 L35 41 L36 30 Z" />
+                    <path class="lawyer-arm" d="M27 33 L18 47 L10 43" />
+                    <rect x="40" y="35" width="17" height="24" rx="2" fill="#8a3430" stroke="#e3bf71" stroke-width="2" transform="rotate(-12 48 47)" />
+                    <path stroke="#e3bf71" stroke-width="2" d="M44 41 L53 39 M45 45 L54 43" />
+                    <path class="lawyer-arm" d="M38 33 L45 49 L53 47" />
+                    <circle cx="34" cy="17" r="10" fill="#bd815d" />
+                    <path fill="#202735" d="M24 17 C21 1 45 1 44 16 L39 12 L25 13 Z" />
+                    <circle cx="39" cy="17" r="1.2" fill="#202735" />
+                  </g>
+                </svg>
+              </div>
+              <svg class="justice-goal" viewBox="0 0 72 108" aria-hidden="true" focusable="false">
+                <path d="M7 99 H65 V105 H7 Z M13 92 H59 V99 H13 Z" fill="#8e6a36" />
+                <path d="M24 42 L45 42 L54 92 H18 Z" fill="#b18b4c" />
+                <path d="M26 44 L45 86 M29 57 L21 87" stroke="#e8d2a4" stroke-width="3" />
+                <circle cx="34" cy="28" r="10" fill="#c7a366" />
+                <path d="M24 25 Q34 8 44 25 M28 18 L34 12 L40 18" fill="#8e6a36" />
+                <path d="M27 29 H41 M29 34 Q34 38 39 34" stroke="#715326" stroke-width="1.5" fill="none" />
+                <path d="M26 46 L16 37 L16 19 M43 46 L51 60" stroke="#b18b4c" stroke-width="6" fill="none" stroke-linecap="round" />
+                <g stroke="#8e6a36" stroke-width="1.5" fill="none">
+                  <path d="M16 5 V22 M3 11 H29 M5 11 L1 25 L10 25 Z M27 11 L22 25 L32 25 Z" />
+                </g>
+                <rect x="45" y="50" width="17" height="24" rx="2" fill="#263e58" stroke="#e8d2a4" />
+                <path d="M48 56 H59 M48 60 H59 M48 64 H56" stroke="#e8d2a4" />
+                <path d="M14 96 H58" stroke="#df8c42" stroke-width="2" />
+                <path d="M14 99 H58" stroke="#fff" stroke-width="2" />
+                <path d="M14 102 H58" stroke="#42754e" stroke-width="2" />
+              </svg>
+              <progress id="case-journey-bar" max="100" value="0" aria-labelledby="journey-title" aria-describedby="journey-summary journey-notice" hidden></progress>
+            </div>
+          </div>
+          <p id="completion-animation-caption" hidden>A lawyer carrying a law book runs to the estimated progress, then keeps running in place toward an Indian justice figure holding scales and the Constitution. The animation is decorative, not a prediction of success.</p>
+          <div id="journey-dates" class="journey-dates"></div>
+          <p id="journey-notice"></p>
+          <details>
+            <summary>How this rough estimate is calculated</summary>
+            <p id="completion-formula"></p>
+            <ol id="completion-checklist"></ol>
+          </details>
+        </section>
+        <section aria-labelledby="stage-progress-title">
+          <h3 id="stage-progress-title">This case's progress</h3>
+          <p id="stage-progress-note"></p>
+          <ol id="case-stage-progress" class="stage-progress" aria-label="This case's recorded milestones, history and current stage"></ol>
+          <p>Green: recorded milestone. Blue: recorded past activity, completion unverified. Amber: current recorded stage. Repeated consecutive purposes are grouped; returning purposes appear again in date order. Hearing dates do not prove work was completed. No percentage or remaining-time estimate is inferred.</p>
+          <h4>Other stages - completion not confirmed</h4>
+          <p>Greyed-out steps below are common trial stages not established by this snapshot. They are not confirmed pending tasks or a prediction of this case's future sequence. Stages already listed above can also remain incomplete.</p>
+          <ol id="case-unconfirmed-progress" class="stage-progress" aria-label="Other stages with unconfirmed completion"></ol>
+          <h4>Future stages and pending work to confirm</h4>
+          <p id="case-future-note"></p>
+          <ol id="case-future-progress" class="stage-progress" aria-label="Recorded future hearings and possible later stages"></ol>
+        </section>
+        <section aria-labelledby="progress-title">
+          <h3 id="progress-title">Progress so far: what is recorded and what is completed?</h3>
+          <p id="progress-notice"></p>
+          <div id="progress-milestones"></div>
+          <h3>Work listed in the hearing history</h3>
+          <div id="progress-activity"></div>
+          <p id="progress-current"></p>
+        </section>
+        <h3>Next steps</h3>
+        <div id="case-roadmap"></div>
+        <p>For a document-grounded review, upload your authorized case documents and use the local assistant. Its source citations still require verification; this checklist is not a legal opinion on your chances of success.</p>
+      </section>
+      <div class="workspace-grid">
+        <div>
+          <section class="workspace-panel" aria-labelledby="documents-title">
+            <h2 id="documents-title">Case documents</h2>
+            <p>Text-based PDFs or UTF-8 TXT, up to 10 MB each. Scans require OCR first. Uploaded files are not automatically authenticated or admitted as evidence.</p>
+            <form id="upload-form">
+              <label class="field">Document
+                <input id="document-file" type="file" accept=".pdf,.txt" required>
+              </label>
+              <label class="field">Category
+                <select id="document-category">
+                  <option>Pleading</option><option>Evidence</option><option>Order</option><option>Correspondence</option><option>Other</option>
+                </select>
+              </label>
+              <button id="upload-button" class="button button-primary" type="submit">Upload locally</button>
+            </form>
+            <p id="upload-status" class="workspace-status" role="status"></p>
+            <div id="document-list"></div>
+          </section>
+          <section class="workspace-panel" aria-labelledby="timeline-title">
+            <h2 id="timeline-title">Published hearing timeline</h2>
+            <p>Imported eCourts history in source order, not a complete filing register. Refresh through the tracker, then sync this snapshot.</p>
+            <p id="snapshot-info"></p>
+            <div id="timeline"></div>
+          </section>
+        </div>
+        <section class="workspace-panel assistant-panel" aria-labelledby="assistant-title">
+          <h2 id="assistant-title">Local legal document assistant</h2>
+          <p id="ai-status" class="workspace-status" role="status">Checking local model...</p>
+          <button id="check-model" class="button button-quiet" type="button">Check local AI</button>
+          <form id="assistant-form">
+            <label class="field">Task
+              <select id="assistant-mode">
+                <option value="question">Ask about documents</option>
+                <option value="summary">Summarize available material</option>
+                <option value="draft">Draft for advocate review</option>
+              </select>
+            </label>
+            <label class="field">Question or drafting request
+              <textarea id="assistant-question" rows="5" maxlength="4000" required placeholder="Which documents support the claimed payment? Identify gaps and cite the relevant pages."></textarea>
+            </label>
+            <p>Keyword search selects up to 8 excerpts. Answers may miss relevant material and are not verified legal research. For TXT files, a page is a form-feed-delimited section.</p>
+            <button id="ask-button" class="button button-primary" type="submit">Analyze locally</button>
+          </form>
+          <p id="assistant-status" class="workspace-status" role="status"></p>
+          <div id="answer-section" hidden>
+            <h3 id="answer-heading">AI-generated assistance</h3>
+            <pre id="assistant-answer"></pre>
+            <p id="answer-disclaimer"></p>
+            <ul id="answer-limitations"></ul>
+            <h3>Check the cited sources</h3>
+            <div id="answer-sources"></div>
+            <button id="download-answer" class="button button-quiet" type="button">Download answer and sources (JSON)</button>
+          </div>
+        </section>
+      </div>
+    </main>
+    <dialog id="document-dialog" aria-labelledby="document-title">
+      <div class="details-content">
+        <div class="dialog-heading">
+          <h2 id="document-title">Extracted text</h2>
+          <button id="close-document" class="icon-button" type="button" aria-label="Close document">×</button>
+        </div>
+        <p id="document-warning"></p>
+        <div id="document-pages"></div>
+      </div>
+    </dialog>
+  </body>
+</html>

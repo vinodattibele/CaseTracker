@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f4ef">
+    <title>Karnataka Civil Case Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" type="module"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Karnataka Civil Case Tracker home">
+        <span class="brand-mark" aria-hidden="true">KC</span>
+        <span>Karnataka <strong>Case Tracker</strong></span>
+      </a>
+      <a class="official-link" href="https://services.ecourts.gov.in/ecourtindia_v6/" target="_blank" rel="noopener noreferrer">
+        Official eCourts portal <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main class="page">
+      <section class="intro">
+        <div>
+          <p class="eyebrow">PUBLIC COURT RECORDS · KARNATAKA</p>
+          <h1>Civil case tracker</h1>
+          <p class="intro-copy">Enter a Karnataka CNR, verify the CAPTCHA on eCourts, and import the case details.</p>
+        </div>
+        <div class="record-count" aria-live="polite">
+          <span id="case-count">0</span>
+          <span>saved cases</span>
+        </div>
+      </section>
+
+      <section class="notice" aria-label="Data source information">
+        <span class="notice-icon" aria-hidden="true">i</span>
+        <p><strong>You verify, the app imports:</strong> Start a CNR lookup below. In the separate Chrome window, complete the official CAPTCHA and click Search. Return here and click Import result. This does not bypass CAPTCHA or fetch cases in bulk.</p>
+        <a href="https://services.ecourts.gov.in/ecourtindia_v6/?p=casestatus/index" target="_blank" rel="noopener noreferrer">Open case status search ↗</a>
+      </section>
+
+      <section class="lookup-card" aria-labelledby="lookup-title">
+        <h2 id="lookup-title">Fetch case by CNR</h2>
+        <form id="lookup-form" class="lookup-controls">
+          <label class="field" for="lookup-cnr">Karnataka CNR number
+            <input id="lookup-cnr" name="cnr" required maxlength="24" autocomplete="off" spellcheck="false" placeholder="KA + court code + 12 digits" aria-describedby="lookup-help">
+          </label>
+          <button id="lookup-start" class="button button-primary" type="submit">Open official lookup</button>
+        </form>
+        <p id="lookup-help">A separate Chrome window opens on this computer. Complete the CAPTCHA and search there. Expand any history or orders sections you want included before importing.</p>
+        <div id="lookup-active" hidden>
+          <p id="lookup-instructions"></p>
+          <div class="lookup-actions">
+            <button id="lookup-import" class="button button-primary" type="button">Import result</button>
+            <button id="lookup-cancel" class="button button-quiet" type="button">Cancel lookup</button>
+          </div>
+        </div>
+        <p id="lookup-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="toolbar" aria-label="Case list controls">
+        <label class="search-box">
+          <span class="sr-only">Search saved cases</span>
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="filter-text" type="search" placeholder="Search CNR, party, court..." autocomplete="off">
+        </label>
+        <label class="filter-select">
+          <span class="sr-only">Filter by status</span>
+          <select id="filter-status">
+            <option value="">All statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Disposed">Disposed</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+        <button id="export-button" class="button button-quiet" type="button">Export CSV</button>
+        <button id="add-button" class="button button-primary" type="button"><span aria-hidden="true">＋</span> Add case</button>
+      </section>
+
+      <section class="table-card" aria-label="Saved civil cases">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Case / CNR</th>
+                <th scope="col">Parties</th>
+                <th scope="col">Court</th>
+                <th scope="col">Status</th>
+                <th scope="col">Next hearing</th>
+                <th scope="col"><span class="sr-only">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="case-rows"></tbody>
+          </table>
+          <div id="empty-state" class="empty-state">
+            <span class="empty-icon" aria-hidden="true">▤</span>
+            <h2>No cases saved yet</h2>
+            <p>Use the CNR lookup above to import a verified eCourts result, or add a case manually.</p>
+            <button class="button button-primary" type="button" data-open-form>Add your first case</button>
+          </div>
+          <p id="no-results" class="no-results" hidden>No saved cases match these filters.</p>
+        </div>
+        <footer class="table-footer">
+          <span id="table-summary">Showing 0 cases</span>
+          <span>Data is stored in this browser only</span>
+        </footer>
+      </section>
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+    </main>
+
+    <dialog id="case-dialog" aria-labelledby="dialog-title">
+      <form id="case-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">CASE DETAILS</p>
+            <h2 id="dialog-title">Add a case</h2>
+          </div>
+          <button id="close-dialog" class="icon-button" type="button" aria-label="Close">×</button>
+        </div>
+        <input id="record-id" type="hidden">
+        <div class="form-grid">
+          <label class="field field-wide">Case title / number <span class="required">*</span>
+            <input name="title" required maxlength="120" placeholder="e.g. Original Suit 123/2025">
+          </label>
+          <label class="field">CNR number
+            <input name="cnr" maxlength="20" placeholder="16-character CNR">
+          </label>
+          <label class="field">Case type
+            <input name="caseType" maxlength="80" placeholder="e.g. Original Suit">
+          </label>
+          <label class="field">Petitioner / plaintiff
+            <input name="petitioner" maxlength="120">
+          </label>
+          <label class="field">Respondent / defendant
+            <input name="respondent" maxlength="120">
+          </label>
+          <label class="field">District
+            <select name="district">
+              <option value="">Select district</option>
+              <option>Bagalkote</option><option>Ballari</option><option>Belagavi</option>
+              <option>Bengaluru Rural</option><option>Bengaluru Urban</option><option>Bidar</option>
+              <option>Chamarajanagara</option><option>Chikkaballapura</option><option>Chikkamagaluru</option>
+              <option>Chitradurga</option><option>Davangere</option><option>Dakshina Kannada</option>
+              <option>Dharwad</option><option>Gadag</option><option>Hassan</option><option>Haveri</option>
+              <option>Kalaburagi</option><option>Kodagu</option><option>Kolar</option><option>Koppal</option>
+              <option>Mandya</option><option>Mysuru</option><option>Raichur</option><option>Ramanagara</option>
+              <option>Shivamogga</option><option>Tumakuru</option><option>Udupi</option>
+              <option>Uttara Kannada</option><option>Vijayapura</option><option>Yadgir</option>
+            </select>
+          </label>
+          <label class="field">Court
+            <input name="court" maxlength="120" placeholder="Court name">
+          </label>
+          <label class="field">Status
+            <select name="status">
+              <option>Pending</option><option>Disposed</option><option>Other</option>
+            </select>
+          </label>
+          <label class="field">Next hearing
+            <input name="nextHearing" type="date">
+          </label>
+          <label class="field field-wide">Notes
+            <textarea name="notes" rows="2" maxlength="500" placeholder="Optional notes"></textarea>
+          </label>
+        </div>
+        <p id="form-error" class="form-error" role="alert"></p>
+        <div class="dialog-actions">
+          <button id="cancel-dialog" class="button button-quiet" type="button">Cancel</button>
+          <button class="button button-primary" type="submit">Save case</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="details-dialog" aria-labelledby="details-title">
+      <div class="details-content">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">IMPORTED ECOURTS RESULT</p>
+            <h2 id="details-title">Case details</h2>
+          </div>
+          <button id="close-details" class="icon-button" type="button" aria-label="Close case details">×</button>
+        </div>
+        <p id="details-meta"></p>
+        <p>The snapshot contains the result text and tables displayed at import time. It does not download linked orders or hidden sections. Check eCourts for current information.</p>
+        <pre id="details-text"></pre>
+        <div id="details-links"></div>
+        <button id="details-download" class="button button-quiet" type="button">Download full snapshot (JSON)</button>
+      </div>
+    </dialog>
+  </body>
+</html>
